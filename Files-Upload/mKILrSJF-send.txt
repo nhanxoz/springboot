@@ -1,0 +1,43 @@
+<div class="modal fade" id="SelectTicket" role="dialog"></div>
+
+        function showtime1(mvt, showtimex, type, cn, ca, fn) {
+            $.get('/Ticket/SelectTicket', { mvtid: mvt, cinemaname: cn, datetime: date_select, showtime: showtimex, room: ca, screentype: type, filmname: fn }, function (data) {
+                $('#SelectTicket').html(data);
+                $('#SelectTicket').modal('show');
+            });
+        }
+
+
+
+public ActionResult SelectTicket(string mvtid, string cinemaname, string datetime, string showtime, string room, string screentype, string filmname)
+        {
+            if (Session["email"] != null)
+            {
+                ViewBag.index = 1;
+                ViewBag.name = Session["name_user"].ToString();
+                ViewBag.userid = Session["UserID"].ToString();
+            }
+            MVT = mvtid;
+            var cinemaaddress = db.Database.SqlQuery<CINEMA>($"exec GetCinemaFromName N'{cinemaname}'").ToList()[0];
+            ViewBag.CinemaAddress = cinemaaddress.CinemaAddress;
+            ViewBag.CinemaName = cinemaname;
+            ViewBag.FilmName = filmname;
+            ViewBag.showtime = showtime;
+            ViewBag.datetime = datetime;
+            ViewBag.screentype = screentype;
+            var img = db.Database.SqlQuery<MOVIE>($"exec GetFilmFromName N'{filmname}'").ToList();
+            ROOM room1 = db.ROOMs.Find(room);
+            Room = room1.RoomName;
+            ViewBag.room = Room;
+            Image = img[0].PosterLink;
+            ViewBag.Image = Image;
+            CinemaAddress = cinemaaddress.CinemaAddress;
+            CinemaName = cinemaname;
+            MovieName = filmname;
+            ShowTime = showtime;
+            DateTime1 = datetime;
+            ScreenType = screentype;
+            ViewBag.tickettype = db.TICKET_TYPE.ToList();
+
+            return PartialView();
+        }

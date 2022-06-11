@@ -1,0 +1,40 @@
+public void mrbAnswer_double(object sender, EventArgs e)
+        {
+            try
+            {
+                ErrorController rEC = new ErrorController();
+                TXTextControl.TextControl mrb = sender as TXTextControl.TextControl;
+                frmChangeHeightAns frm;
+                switch (mrb.Name)
+                {
+                    case "rtbAnswerA":
+                        frm = new frmChangeHeightAns(q.ListAnswer[0].AnswerID);
+                        frm.TopMost = true; frm.ShowDialog();
+                        break;
+                    case "rtbAnswerB":
+                        frm = new frmChangeHeightAns(q.ListAnswer[1].AnswerID);
+                        frm.TopMost = true; frm.ShowDialog();
+
+
+                        break;
+                    case "rtbAnswerC":
+                        frm = new frmChangeHeightAns(q.ListAnswer[2].AnswerID);
+                        frm.TopMost = true; frm.ShowDialog();
+
+                        break;
+                    case "rtbAnswerD":
+                        frm = new frmChangeHeightAns(q.ListAnswer[3].AnswerID);
+                        frm.TopMost = true; frm.ShowDialog();
+
+                        break;
+                }
+                
+                
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối");
+            }
+        }
