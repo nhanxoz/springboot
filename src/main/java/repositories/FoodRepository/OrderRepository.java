@@ -5,22 +5,16 @@
 package repositories.FoodRepository;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import stackjava.com.sbrestful.entities.Food;
-
+import stackjava.com.sbrestful.response.OrderAcceptChild;
+import stackjava.com.sbrestful.entities.Order;
 /**
  *
  * @author ADMIN
  */
 @Repository
-public interface FoodRepository extends JpaRepository<Food, Long> {
-  
-  
-  
-  @Query(value = "SELECT coalesce(max(id), 0) FROM Food") 
-    public Long getMaxId();
-  
+public interface OrderRepository extends JpaRepository<Order, Long>{
+    
 }

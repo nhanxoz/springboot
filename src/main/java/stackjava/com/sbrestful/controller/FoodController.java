@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import repositories.FoodRepository.FoodRepository;
-import static stackjava.com.sbrestful.controller.UserRestController.mapUser;
+
 import stackjava.com.sbrestful.entities.Food;
 import stackjava.com.sbrestful.entities.User;
 
@@ -47,14 +47,14 @@ public class FoodController {
 	  @RequestMapping(value = "/foods", method = RequestMethod.POST)
           @Transactional
 	  public ResponseEntity<String> createFood(@RequestBody Food food) {
-              Integer newID = foodRepository.getMaxId()+1;
+              Long newID = foodRepository.getMaxId()+1;
               food.setId(newID);
 	    foodRepository.save(food);
 	    return new ResponseEntity<>("Created!", HttpStatus.CREATED);
 	  }
 	  /* ---------------- DELETE FOOD ------------------------ */
 	  @RequestMapping(value = "/foods/{id}", method = RequestMethod.DELETE)
-	  public ResponseEntity<String> deleteFoodById(@PathVariable Integer id) {
+	  public ResponseEntity<String> deleteFoodById(@PathVariable Long id) {
 	        Optional<Food> food = foodRepository.findById(id);
 	    if (food == null) {
 	      return new ResponseEntity<String>("Not Found Food", HttpStatus.OK);

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package stackjava.com.sbrestful.entities;
+import java.math.BigInteger;
 import javax.persistence.*;
 
 /**
@@ -12,100 +13,160 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Food", 
     uniqueConstraints = { 
-      @UniqueConstraint(columnNames = "id"),
-      @UniqueConstraint(columnNames = "code") 
+      @UniqueConstraint(columnNames = "Id"),
+      
     })
 public class Food {
-    
+    public Food() {}
     @Id
-    private Integer id;
-    private String code;
-    private String name;
-    private String description;
-    private String image;
-    private int price;
-    private String category;
-    private int quantity;
-    private String inventoryStatus;
-    private int rating;
+    protected  Long Id;
+    @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
+    protected String Name;
+    protected String Alias;
+    protected String Image;
+    protected int OriginPrice;
+    protected int PromotionPrice;
+    protected int CategoryID;
+    protected BigInteger CreatedDate;
+    protected String CreatedBy;
+    protected BigInteger UpdatedDate;
+    protected String UpdatedBy;
+    protected int ViewCount;
+    protected int Status;
+        @ManyToOne 
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
+    public Food(Long Id, String Name, String Alias, String Image, int OriginPrice, int PromotionPrice, int CategoryID, BigInteger CreatedDate, String CreatedBy, BigInteger UpdatedDate, String UpdatedBy, int ViewCount, int Status, Category category) {
+        this.Id = Id;
+        this.Name = Name;
+        this.Alias = Alias;
+        this.Image = Image;
+        this.OriginPrice = OriginPrice;
+        this.PromotionPrice = PromotionPrice;
+        this.CategoryID = CategoryID;
+        this.CreatedDate = CreatedDate;
+        this.CreatedBy = CreatedBy;
+        this.UpdatedDate = UpdatedDate;
+        this.UpdatedBy = UpdatedBy;
+        this.ViewCount = ViewCount;
+        this.Status = Status;
         this.category = category;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public Long getId() {
+        return Id;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
-    public String getInventoryStatus() {
-        return inventoryStatus;
+    public String getName() {
+        return Name;
     }
 
-    public void setInventoryStatus(String inventoryStatus) {
-        this.inventoryStatus = inventoryStatus;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
-    public int getRating() {
-        return rating;
+    public String getAlias() {
+        return Alias;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setAlias(String Alias) {
+        this.Alias = Alias;
     }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String Image) {
+        this.Image = Image;
+    }
+
+    public int getOriginPrice() {
+        return OriginPrice;
+    }
+
+    public void setOriginPrice(int OriginPrice) {
+        this.OriginPrice = OriginPrice;
+    }
+
+    public int getPromotionPrice() {
+        return PromotionPrice;
+    }
+
+    public void setPromotionPrice(int PromotionPrice) {
+        this.PromotionPrice = PromotionPrice;
+    }
+
+    public int getCategoryID() {
+        return CategoryID;
+    }
+
+    public void setCategoryID(int CategoryID) {
+        this.CategoryID = CategoryID;
+    }
+
+    public BigInteger getCreatedDate() {
+        return CreatedDate;
+    }
+
+    public void setCreatedDate(BigInteger CreatedDate) {
+        this.CreatedDate = CreatedDate;
+    }
+
+    public String getCreatedBy() {
+        return CreatedBy;
+    }
+
+    public void setCreatedBy(String CreatedBy) {
+        this.CreatedBy = CreatedBy;
+    }
+
+    public BigInteger getUpdatedDate() {
+        return UpdatedDate;
+    }
+
+    public void setUpdatedDate(BigInteger UpdatedDate) {
+        this.UpdatedDate = UpdatedDate;
+    }
+
+    public String getUpdatedBy() {
+        return UpdatedBy;
+    }
+
+    public void setUpdatedBy(String UpdatedBy) {
+        this.UpdatedBy = UpdatedBy;
+    }
+
+    public int getViewCount() {
+        return ViewCount;
+    }
+
+    public void setViewCount(int ViewCount) {
+        this.ViewCount = ViewCount;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
+    
 }
+
+    
