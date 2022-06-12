@@ -4,6 +4,7 @@
  */
 package stackjava.com.sbrestful.entities;
 import java.math.BigInteger;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -37,6 +38,10 @@ public class Food {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
+        @OneToMany(mappedBy="food",cascade = CascadeType.ALL,
+        orphanRemoval = true)
+        private List<Comment> comments;
+        
     public Food(Long Id, String Name, String Alias, String Image, int OriginPrice, int PromotionPrice, int CategoryID, BigInteger CreatedDate, String CreatedBy, BigInteger UpdatedDate, String UpdatedBy, int ViewCount, int Status, Category category) {
         this.Id = Id;
         this.Name = Name;
@@ -52,6 +57,32 @@ public class Food {
         this.ViewCount = ViewCount;
         this.Status = Status;
         this.category = category;
+    }
+
+    public Food(Long Id, String Name, String Alias, String Image, int OriginPrice, int PromotionPrice, int CategoryID, BigInteger CreatedDate, String CreatedBy, BigInteger UpdatedDate, String UpdatedBy, int ViewCount, int Status, Category category, List<Comment> comments) {
+        this.Id = Id;
+        this.Name = Name;
+        this.Alias = Alias;
+        this.Image = Image;
+        this.OriginPrice = OriginPrice;
+        this.PromotionPrice = PromotionPrice;
+        this.CategoryID = CategoryID;
+        this.CreatedDate = CreatedDate;
+        this.CreatedBy = CreatedBy;
+        this.UpdatedDate = UpdatedDate;
+        this.UpdatedBy = UpdatedBy;
+        this.ViewCount = ViewCount;
+        this.Status = Status;
+        this.category = category;
+        this.comments = comments;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getId() {

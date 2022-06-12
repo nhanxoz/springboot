@@ -1,5 +1,6 @@
 package stackjava.com.sbrestful.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +33,7 @@ public class User implements Serializable {
 
   @NotBlank
   @Size(max = 120)
+  @JsonIgnore
   private String password;
 
     public String getAddress() {
