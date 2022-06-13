@@ -4,6 +4,7 @@
  */
 package stackjava.com.sbrestful.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +37,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "food_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Food food;
     public Comment(){}
 
