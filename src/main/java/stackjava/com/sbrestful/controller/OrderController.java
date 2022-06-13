@@ -5,6 +5,7 @@
 package stackjava.com.sbrestful.controller;
 
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import stackjava.com.sbrestful.entities.Order;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 /**
  *
  * @author ADMIN
@@ -26,6 +30,10 @@ import stackjava.com.sbrestful.entities.Order;
 public class OrderController {
      @Autowired
      OrderRepository orderRepository;
+     @Autowired
+     private JdbcTemplate jdbcTemplate;
+
+
      @GetMapping("/all")
   public String allAccess() {
     return "Public Content.";
@@ -35,4 +43,13 @@ public class OrderController {
          List<Order> listOrder = orderRepository.findAll();
          return new ResponseEntity<>(listOrder, HttpStatus.OK);
      }
+//--UPDATE STATUS-----//
+     @RequestMapping(value = "/orders", method = RequestMethod.PUT)
+          @Transactional
+	  public ResponseEntity<String> updateStatus(@RequestParam int status, @RequestParam int id) {
+	    String updateQuery= "Update orders set status=?  where id=?";
+            
+            jdbcTemplate.update(updateQuery,status,id);
+	    return new ResponseEntity<>("Updated!", HttpStatus.OK);
+	  }
 }

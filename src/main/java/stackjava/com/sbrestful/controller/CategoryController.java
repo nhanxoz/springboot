@@ -5,7 +5,7 @@
 
 package stackjava.com.sbrestful.controller;
 
-import stackjava.com.sbrestful.repository.CategoryResponse;
+import stackjava.com.sbrestful.response.CategoryResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

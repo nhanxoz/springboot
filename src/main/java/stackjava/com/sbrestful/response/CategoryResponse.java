@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package stackjava.com.sbrestful.repository;
+package stackjava.com.sbrestful.response;
 
 import java.util.List;
 import stackjava.com.sbrestful.entities.Category;
