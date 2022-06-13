@@ -16,5 +16,6 @@ import stackjava.com.sbrestful.entities.Order;
  */
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>{
-    
+
+
 }

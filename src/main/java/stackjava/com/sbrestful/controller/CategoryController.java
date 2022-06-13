@@ -5,7 +5,7 @@
 
 package stackjava.com.sbrestful.controller;
 
-import stackjava.com.sbrestful.repository.CategoryResponse;
+import stackjava.com.sbrestful.response.CategoryResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +59,6 @@ public class CategoryController {
 	  /* ---------------- DELETE CATEGORY ------------------------ */
 	  @RequestMapping(value = "/categoryfood/{id}", method = RequestMethod.DELETE)
 	  public ResponseEntity<String> deleteCategoryById(@PathVariable Long id) {
-          System.out.print(id);
 	        Optional<Category> category = categoryRepository.findById(id);
 	    if (category == null) {
 	      return new ResponseEntity<String>("Not Found Category", HttpStatus.OK);
