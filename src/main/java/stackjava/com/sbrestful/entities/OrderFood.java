@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import stackjava.com.sbrestful.entities.compositekey.KeyOrderFood;
 
 /**
@@ -29,12 +31,14 @@ public class OrderFood {
     @ManyToOne
     @MapsId("food_id")
     @JoinColumn(name = "food_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Food food; 
     
     @JsonIgnore
     @ManyToOne
     @MapsId("order_id")
     @JoinColumn(name = "order_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Order order;
 
     public OrderFood(KeyOrderFood id, int quantity, Food food, Order order) {

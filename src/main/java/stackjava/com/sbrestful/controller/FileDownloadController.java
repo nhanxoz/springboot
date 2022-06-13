@@ -4,7 +4,7 @@
  */
 package stackjava.com.sbrestful.controller;
 
-import Utils.FileDownloadUtil;
+import stackjava.com.sbrestful.utils.FileDownloadUtil;
 import java.io.IOException;
  
 import org.springframework.core.io.Resource;

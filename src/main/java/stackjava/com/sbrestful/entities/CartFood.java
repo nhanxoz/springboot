@@ -4,12 +4,15 @@
  */
 package stackjava.com.sbrestful.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import stackjava.com.sbrestful.entities.compositekey.KeyCartFood;
 
 /**
@@ -24,12 +27,14 @@ public class CartFood {
     private KeyCartFood id;
     
     private int quantity;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @MapsId("cart_id")
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @MapsId("food_id")
     @JoinColumn(name = "food_id")
     private Food food;

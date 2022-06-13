@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "users", 
@@ -53,12 +55,15 @@ public class User implements Serializable {
     }
   
   @Size(max = 100)
+  @Column(columnDefinition = "NVARCHAR(250)")
   private String Address;
   
   @Size(max = 100)
+  @Column(columnDefinition = "NVARCHAR(250)")
   private String FullName;
   
   @ManyToMany(fetch = FetchType.LAZY)
+  @OnDelete(action = OnDeleteAction.CASCADE)
   @JoinTable(  name = "user_roles", 
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id"))

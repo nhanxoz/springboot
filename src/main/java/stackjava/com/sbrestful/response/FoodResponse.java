@@ -1,4 +1,4 @@
-package stackjava.com.sbrestful.controller;
+package stackjava.com.sbrestful.response;
 
 
 import java.util.List;

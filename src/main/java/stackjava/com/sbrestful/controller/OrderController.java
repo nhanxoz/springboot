@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import repositories.FoodRepository.OrderRepository;
+import stackjava.com.sbrestful.repository.OrderRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import stackjava.com.sbrestful.entities.Order;
 /**
  *
@@ -20,12 +22,15 @@ import stackjava.com.sbrestful.entities.Order;
  */
 @RestController
 @RequestMapping("/apiFood")
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class OrderController {
      @Autowired
      OrderRepository orderRepository;
-     
-     @RequestMapping(value = "/orders", method = RequestMethod.GET)
+     @GetMapping("/all")
+  public String allAccess() {
+    return "Public Content.";
+  }
+     @GetMapping("/orders")
      public ResponseEntity<List<Order>> getAll(){
          List<Order> listOrder = orderRepository.findAll();
          return new ResponseEntity<>(listOrder, HttpStatus.OK);

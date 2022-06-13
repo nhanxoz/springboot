@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -52,13 +54,34 @@ public class Order {
     @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
     private String CreatedTime;
     
+    private int Status;
+    private int TotalPrice;
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+
+    public int getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public void setTotalPrice(int TotalPrice) {
+        this.TotalPrice = TotalPrice;
+    }
+    
     @ManyToOne 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User user;
     
     @OneToMany(mappedBy = "order",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<OrderFood> order_food;
     public Order(){}
     public Order(Long ID, String CustomerName, String CustomerAddress, String CustomerMessage, String PaymentMethod, String CreatedTime, User user, List<OrderFood> order_food) {

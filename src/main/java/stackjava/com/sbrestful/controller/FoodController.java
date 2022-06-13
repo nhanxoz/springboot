@@ -4,6 +4,7 @@
  */
 package stackjava.com.sbrestful.controller;
 
+import stackjava.com.sbrestful.response.FoodResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import repositories.FoodRepository.FoodRepository;
+import stackjava.com.sbrestful.repository.FoodRepository;
 
 import stackjava.com.sbrestful.entities.Food;
 import stackjava.com.sbrestful.entities.User;
@@ -29,7 +30,7 @@ import stackjava.com.sbrestful.entities.User;
  */
 @RestController
 @RequestMapping("/apiFood")
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class FoodController {
 	
             @Autowired
@@ -62,6 +63,13 @@ public class FoodController {
 	    
 	    foodRepository.deleteById(id);
 	    return new ResponseEntity<>("Deleted!", HttpStatus.OK);
+	  }
+          /* ---------------- UODATE FOOD ------------------------ */
+	  @RequestMapping(value = "/foods", method = RequestMethod.PUT)
+          @Transactional
+	  public ResponseEntity<String> updateFood(@RequestBody Food food) {
+	    food = foodRepository.save(food);
+	    return new ResponseEntity<>("updated!", HttpStatus.OK);
 	  }
 	  
 	  

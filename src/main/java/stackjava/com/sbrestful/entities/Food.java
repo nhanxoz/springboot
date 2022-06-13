@@ -6,6 +6,8 @@ package stackjava.com.sbrestful.entities;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -27,7 +29,8 @@ public class Food {
     protected String Image;
     protected int OriginPrice;
     protected int PromotionPrice;
-    protected int CategoryID;
+    @Column(columnDefinition = "NVARCHAR(250)")
+    protected String Description;
     protected BigInteger CreatedDate;
     protected String CreatedBy;
     protected BigInteger UpdatedDate;
@@ -35,11 +38,42 @@ public class Food {
     protected int ViewCount;
     protected int Status;
         @ManyToOne 
+        @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
+        @OneToMany(mappedBy = "food",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<OrderFood> order_food;
+        
+    public List<OrderFood> getOrder_food() {
+        return order_food;
+    }
+
+    public void setOrder_food(List<OrderFood> order_food) {
+        this.order_food = order_food;
+    }
+        
+    @OneToMany(mappedBy = "food",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<CartFood> cart_food;
+
+    public List<CartFood> getCart_food() {
+        return cart_food;
+    }
+
+    public void setCart_food(List<CartFood> cart_food) {
+        this.cart_food = cart_food;
+    }
+    
+    
         @OneToMany(mappedBy="food",cascade = CascadeType.ALL,
         orphanRemoval = true)
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private List<Comment> comments;
         
     public Food(Long Id, String Name, String Alias, String Image, int OriginPrice, int PromotionPrice, int CategoryID, BigInteger CreatedDate, String CreatedBy, BigInteger UpdatedDate, String UpdatedBy, int ViewCount, int Status, Category category) {
@@ -49,7 +83,7 @@ public class Food {
         this.Image = Image;
         this.OriginPrice = OriginPrice;
         this.PromotionPrice = PromotionPrice;
-        this.CategoryID = CategoryID;
+            
         this.CreatedDate = CreatedDate;
         this.CreatedBy = CreatedBy;
         this.UpdatedDate = UpdatedDate;
@@ -66,7 +100,7 @@ public class Food {
         this.Image = Image;
         this.OriginPrice = OriginPrice;
         this.PromotionPrice = PromotionPrice;
-        this.CategoryID = CategoryID;
+        
         this.CreatedDate = CreatedDate;
         this.CreatedBy = CreatedBy;
         this.UpdatedDate = UpdatedDate;
@@ -79,6 +113,14 @@ public class Food {
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
 
     public void setComments(List<Comment> comments) {
@@ -133,13 +175,7 @@ public class Food {
         this.PromotionPrice = PromotionPrice;
     }
 
-    public int getCategoryID() {
-        return CategoryID;
-    }
 
-    public void setCategoryID(int CategoryID) {
-        this.CategoryID = CategoryID;
-    }
 
     public BigInteger getCreatedDate() {
         return CreatedDate;

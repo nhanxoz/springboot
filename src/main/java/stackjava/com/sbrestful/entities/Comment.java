@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -33,6 +35,7 @@ public class Comment {
     
     @ManyToOne
     @JoinColumn(name = "food_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Food food;
     public Comment(){}
 

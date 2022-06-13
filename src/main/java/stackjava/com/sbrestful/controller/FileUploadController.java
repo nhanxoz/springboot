@@ -4,7 +4,8 @@
  */
 package stackjava.com.sbrestful.controller;
 
-import Utils.FileUploadUtil;
+import stackjava.com.sbrestful.response.FileUploadResponse;
+import stackjava.com.sbrestful.utils.FileUploadUtil;
 import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
