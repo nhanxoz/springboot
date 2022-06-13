@@ -12,7 +12,16 @@ public class CommentRequest {
     private Long idfood;
     private String Author;
     private String Content;
+    private Long food_id;
 
+    public Long getFood_id() {
+        return food_id;
+    }
+
+    public void setFood_id(Long food_id) {
+        this.food_id = food_id;
+    }
+    
     public Long getIdfood() {
         return idfood;
     }

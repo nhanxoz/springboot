@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import stackjava.com.sbrestful.repository.CommentRepository;
 import stackjava.com.sbrestful.entities.Comment;
+import stackjava.com.sbrestful.repository.FoodRepository;
+import stackjava.com.sbrestful.request.CommentRequest;
 
 /**
  *
@@ -27,6 +29,8 @@ import stackjava.com.sbrestful.entities.Comment;
 public class CommentController {
          @Autowired
      CommentRepository commentRepository;
+         @Autowired
+         FoodRepository foodRepository;
      @Autowired
      private JdbcTemplate jdbcTemplate;
      
@@ -37,9 +41,13 @@ public class CommentController {
      }
      
      @RequestMapping(value = "/comments", method = RequestMethod.POST)
-     public ResponseEntity<String> postComment(@RequestBody Comment cmt){
-         cmt.setID(commentRepository.getMaxId()+1);
-         commentRepository.save(cmt);
+     public ResponseEntity<String> postComment(@RequestBody CommentRequest cmt){
+         Comment cmt_1 = new Comment();
+         cmt_1.setID(commentRepository.getMaxId()+1);
+         cmt_1.setAuthor(cmt.getAuthor());
+         cmt_1.setContent(cmt.getContent());
+         cmt_1.setFood(foodRepository.getById(cmt.getFood_id()));
+         commentRepository.save(cmt_1);
          return new ResponseEntity<>("Created!", HttpStatus.OK);
      }
 }

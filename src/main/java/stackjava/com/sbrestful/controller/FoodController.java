@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +36,8 @@ public class FoodController {
 	
             @Autowired
             FoodRepository foodRepository;
+            @Autowired
+            JdbcTemplate jdbcTemplate;
 	  
 	  /* ---------------- GET ALL FOOD ------------------------ */
 	  @RequestMapping(value = "/foods", method = RequestMethod.GET)
@@ -60,11 +63,11 @@ public class FoodController {
 	    if (food == null) {
 	      return new ResponseEntity<String>("Not Found Food", HttpStatus.OK);
 	    }
-	    
-	    foodRepository.deleteById(id);
+	    String sql = "Delete from food where id = ?";
+	    jdbcTemplate.update(sql, id);
 	    return new ResponseEntity<>("Deleted!", HttpStatus.OK);
 	  }
-          /* ---------------- UODATE FOOD ------------------------ */
+          /* ---------------- UPDATE FOOD ------------------------ */
 	  @RequestMapping(value = "/foods", method = RequestMethod.PUT)
           @Transactional
 	  public ResponseEntity<String> updateFood(@RequestBody Food food) {
