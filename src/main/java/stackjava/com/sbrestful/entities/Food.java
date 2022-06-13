@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package stackjava.com.sbrestful.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.*;
@@ -46,7 +47,9 @@ public class Food {
         cascade = CascadeType.ALL,
         orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<OrderFood> order_food;
+    
         
     public List<OrderFood> getOrder_food() {
         return order_food;
@@ -60,6 +63,7 @@ public class Food {
         cascade = CascadeType.ALL,
         orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<CartFood> cart_food;
 
     public List<CartFood> getCart_food() {
