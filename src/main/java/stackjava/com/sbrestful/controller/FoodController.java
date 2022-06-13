@@ -53,7 +53,7 @@ public class FoodController {
 	    return new ResponseEntity<>("Created!", HttpStatus.CREATED);
 	  }
 	  /* ---------------- DELETE FOOD ------------------------ */
-	  @RequestMapping(value = "/foods/{id}", method = RequestMethod.DELETE)
+	  @RequestMapping(value = "/foods/{id}", method = {  RequestMethod.DELETE})
 	  public ResponseEntity<String> deleteFoodById(@PathVariable Long id) {
 	        Optional<Food> food = foodRepository.findById(id);
 	    if (food == null) {

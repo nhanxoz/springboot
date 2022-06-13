@@ -35,7 +35,15 @@ public class User implements Serializable {
   @Size(max = 120)
   @JsonIgnore
   private String password;
+  private String createday;
 
+    public String getCreateday() {
+        return createday;
+    }
+
+    public void setCreateday(String createday) {
+        this.createday = createday;
+    }
     public String getAddress() {
         return Address;
     }

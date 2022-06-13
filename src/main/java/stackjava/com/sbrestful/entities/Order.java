@@ -23,44 +23,74 @@ import javax.validation.constraints.Size;
  * @author ADMIN
  */
 @Entity
-@Table(name = "Orders", 
-    uniqueConstraints = { 
-      @UniqueConstraint(columnNames = "ID")
-    })
+@Table(name = "Orders",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = "ID")
+        })
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
-    
+
     @Size(max = 250)
     @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
     private String CustomerName;
-    
+
     @Size(max = 250)
     @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
     private String CustomerAddress;
-    
+
     @Size(max = 250)
     @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
     private String CustomerMessage;
-    
+
     @Size(max = 250)
     @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
     private String PaymentMethod;
-    
+
     @Size(max = 250)
     @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
     private String CreatedTime;
-    
-    @ManyToOne 
+
+    public String getCreatedTime() {
+        return CreatedTime;
+    }
+
+    public void setCreatedTime(String CreatedTime) {
+        this.CreatedTime = CreatedTime;
+    }
+
+    private int TotalPrice;
+
+    public int getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public void setTotalPrice(int TotalPrice) {
+        this.TotalPrice = TotalPrice;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+    private int Status;
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    
+
     @OneToMany(mappedBy = "order",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<OrderFood> order_food;
-    public Order(){}
+
+    public Order() {
+    }
+
     public Order(Long ID, String CustomerName, String CustomerAddress, String CustomerMessage, String PaymentMethod, String CreatedTime, User user, List<OrderFood> order_food) {
         this.ID = ID;
         this.CustomerName = CustomerName;
@@ -79,8 +109,6 @@ public class Order {
     public void setOrder_food(List<OrderFood> order_food) {
         this.order_food = order_food;
     }
-    
-    
 
     public Long getID() {
         return ID;
@@ -122,14 +150,6 @@ public class Order {
         this.PaymentMethod = PaymentMethod;
     }
 
-    public String getCreatedTime() {
-        return CreatedTime;
-    }
-
-    public void setCreatedTime(String CreatedTime) {
-        this.CreatedTime = CreatedTime;
-    }
-
     public User getUser() {
         return user;
     }
@@ -137,5 +157,5 @@ public class Order {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
 }
