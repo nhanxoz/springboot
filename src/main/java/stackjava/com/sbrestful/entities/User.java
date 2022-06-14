@@ -32,7 +32,16 @@ public class User implements Serializable {
   @Size(max = 50)
   @Email
   private String email;
+  private String createdDay;
 
+    public String getCreatedDay() {
+        return createdDay;
+    }
+
+    public void setCreatedDay(String createdDay) {
+        this.createdDay = createdDay;
+    }
+  
   @NotBlank
   @Size(max = 120)
   @JsonIgnore

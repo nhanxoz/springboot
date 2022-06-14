@@ -43,6 +43,11 @@ public class OrderController {
          List<Order> listOrder = orderRepository.findAll();
          return new ResponseEntity<>(listOrder, HttpStatus.OK);
      }
+     @GetMapping("/filterOrders")
+     public ResponseEntity<List<Order>> getOrder(int status){
+         List<Order> listOrder = orderRepository.findByStatus(status);
+         return new ResponseEntity<>(listOrder, HttpStatus.OK);
+     }
 //--UPDATE STATUS-----//
      @RequestMapping(value = "/orders", method = RequestMethod.PUT)
           @Transactional

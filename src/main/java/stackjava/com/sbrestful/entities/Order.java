@@ -53,15 +53,15 @@ public class Order {
     @Column(columnDefinition = "NVARCHAR(250) ")
     private String CreatedTime;
     
-    private int Status;
+    private int status;
     private int TotalPrice;
 
     public int getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(int Status) {
-        this.Status = Status;
+        this.status = Status;
     }
 
     public int getTotalPrice() {
