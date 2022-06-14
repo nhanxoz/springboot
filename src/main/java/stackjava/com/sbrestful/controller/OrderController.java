@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import stackjava.com.sbrestful.entities.InfoCusOrder;
 
-
 /**
  *
  * @author ADMIN
@@ -48,23 +47,30 @@ public class OrderController {
         List<Order> listOrder = orderRepository.findAll();
         return new ResponseEntity<>(listOrder, HttpStatus.OK);
     }
+
+    @GetMapping("/filterOrders")
+    public ResponseEntity<List<Order>> getOrder(int status) {
+        List<Order> listOrder = orderRepository.findByStatus(status);
+        return new ResponseEntity<>(listOrder, HttpStatus.OK);
+    }
 //--UPDATE STATUS-----//
 
     @RequestMapping(value = "/orders", method = RequestMethod.PUT)
     @Transactional
-    public ResponseEntity<String> updateStatus(@RequestParam int status, @RequestParam int id) {
+    public ResponseEntity<String> updateStatus( int status,  String id) {
         String updateQuery = "Update orders set status=?  where id=?";
 
         jdbcTemplate.update(updateQuery, status, id);
         return new ResponseEntity<>("Updated!", HttpStatus.OK);
     }
 //    get cart
+
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     @Transactional
     public ResponseEntity getcart() {
         String sql = "Select id, customer_name, status from orders where status = 0";
-       List<InfoCusOrder> carts = jdbcTemplate.query(sql,
+        List<InfoCusOrder> carts = jdbcTemplate.query(sql,
                 BeanPropertyRowMapper.newInstance(InfoCusOrder.class));
-         return new ResponseEntity<>(carts, HttpStatus.OK);
+        return new ResponseEntity<>(carts, HttpStatus.OK);
     }
 }

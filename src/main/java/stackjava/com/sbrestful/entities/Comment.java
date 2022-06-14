@@ -5,6 +5,7 @@
 package stackjava.com.sbrestful.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +30,9 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
-    
+    @Column(columnDefinition = "NVARCHAR(250)")
     private String Author;
+    @Column(columnDefinition = "NVARCHAR(250)")
     private String Content;
     private String TimeCreate;
     

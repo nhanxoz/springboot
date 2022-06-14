@@ -1,5 +1,6 @@
 package stackjava.com.sbrestful.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,7 @@ import stackjava.com.sbrestful.repository.BlogRepository;
 import stackjava.com.sbrestful.repository.CartRepository;
 import stackjava.com.sbrestful.repository.OrderRepository;
 import stackjava.com.sbrestful.request.AddFoodRequest;
+import stackjava.com.sbrestful.request.PaymentRequest;
 import stackjava.com.sbrestful.response.CategoryResponse;
 import stackjava.com.sbrestful.response.BlogResponse;
 import stackjava.com.sbrestful.response.OrderResponse;
@@ -97,6 +100,22 @@ public class AppController {
 
 	    return new ResponseEntity<>(listOrder, HttpStatus.OK);
 	  }
-
+          @RequestMapping(value="/paymentFromCart", method=RequestMethod.POST)
+          public ResponseEntity<String> paymentFromCart(Long user_id, @RequestBody PaymentRequest p){
+              Date d = new Date();
+              Long id_order = d.getTime();
+              Long cart = cartRepository.findByUser_id(user_id);
+              String sql_create_order = "insert into orders(id, customer_address, customer_name, status, user_id ,created_time, customer_message, payment_method, total_price)values(?, ?, ?,1,?,?,'OK',N'Tiền mặt', 0)";
+              jdbcTemplate.update(sql_create_order,id_order, p.address, p.name, user_id, user_id);
+              
+              String sql = "insert into order_food (order_id, food_id, quantity) select ?, food_id, quantity from cart_food where cart_id =?";
+              jdbcTemplate.update(sql, id_order, cart);
+              
+              sql = "update orders set ToTal_Price = (select sum(promotion_price * quantity) from order_food a join Food b on a.food_id = b.ID where order_id = ?)where id = ?";
+              jdbcTemplate.update(sql, id_order, id_order);
+              sql = "delete from cart_food where cart_id =?";
+              jdbcTemplate.update(sql, cart);
+              return new ResponseEntity<String>("Success", HttpStatus.OK);
+          }
 
 }
