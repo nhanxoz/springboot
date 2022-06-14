@@ -47,6 +47,11 @@ public class FoodController {
             foodResponse.setData(listFood);
 	    return new ResponseEntity<>(foodResponse, HttpStatus.OK);
 	  }
+          @RequestMapping(value = "/food", method=RequestMethod.GET)
+          public ResponseEntity getFood(Long id){
+              Optional<Food> food = foodRepository.findById(id);
+              return new ResponseEntity<>(food, HttpStatus.OK);
+          }
           /* ---------------- CREATE NEW FOOD ------------------------ */
 	  @RequestMapping(value = "/foods", method = RequestMethod.POST)
           @Transactional

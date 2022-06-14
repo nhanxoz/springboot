@@ -26,10 +26,10 @@ public class FileUploadController {
      
     @PostMapping("/uploadFile")
     public ResponseEntity<FileUploadResponse> uploadFile(
-            @RequestParam("file") MultipartFile multipartFile)
+            @RequestParam("file") MultipartFile multipartFile, @RequestParam("filename") String filename)
                     throws IOException {
          
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String fileName = filename;
         long size = multipartFile.getSize();
          
         String filecode = FileUploadUtil.saveFile(fileName, multipartFile);
