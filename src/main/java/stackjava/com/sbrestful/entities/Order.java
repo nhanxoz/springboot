@@ -31,7 +31,6 @@ import org.hibernate.annotations.OnDeleteAction;
     })
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
     
     @Size(max = 250)
@@ -43,15 +42,15 @@ public class Order {
     private String CustomerAddress;
     
     @Size(max = 250)
-    @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
+    @Column(columnDefinition = "NVARCHAR(250) ")
     private String CustomerMessage;
     
     @Size(max = 250)
-    @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
+    @Column(columnDefinition = "NVARCHAR(250) ")
     private String PaymentMethod;
     
     @Size(max = 250)
-    @Column(columnDefinition = "NVARCHAR(250) NOT NULL")
+    @Column(columnDefinition = "NVARCHAR(250) ")
     private String CreatedTime;
     
     private int Status;
