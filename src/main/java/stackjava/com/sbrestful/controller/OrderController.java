@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 import stackjava.com.sbrestful.repository.OrderRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import stackjava.com.sbrestful.entities.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import stackjava.com.sbrestful.entities.InfoCusOrder;
+
+
 /**
  *
  * @author ADMIN
@@ -28,28 +32,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/apiFood")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class OrderController {
-     @Autowired
-     OrderRepository orderRepository;
-     @Autowired
-     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    OrderRepository orderRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-     @GetMapping("/all")
-  public String allAccess() {
-    return "Public Content.";
-  }
-     @GetMapping("/orders")
-     public ResponseEntity<List<Order>> getAll(){
-         List<Order> listOrder = orderRepository.findAll();
-         return new ResponseEntity<>(listOrder, HttpStatus.OK);
-     }
+    @GetMapping("/all")
+    public String allAccess() {
+        return "Public Content.";
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<List<Order>> getAll() {
+        List<Order> listOrder = orderRepository.findAll();
+        return new ResponseEntity<>(listOrder, HttpStatus.OK);
+    }
 //--UPDATE STATUS-----//
-     @RequestMapping(value = "/orders", method = RequestMethod.PUT)
-          @Transactional
-	  public ResponseEntity<String> updateStatus(@RequestParam int status, @RequestParam int id) {
-	    String updateQuery= "Update orders set status=?  where id=?";
-            
-            jdbcTemplate.update(updateQuery,status,id);
-	    return new ResponseEntity<>("Updated!", HttpStatus.OK);
-	  }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.PUT)
+    @Transactional
+    public ResponseEntity<String> updateStatus(@RequestParam int status, @RequestParam int id) {
+        String updateQuery = "Update orders set status=?  where id=?";
+
+        jdbcTemplate.update(updateQuery, status, id);
+        return new ResponseEntity<>("Updated!", HttpStatus.OK);
+    }
+//    get cart
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @Transactional
+    public ResponseEntity getcart() {
+        String sql = "Select id, customer_name, status from orders where status = 0";
+       List<InfoCusOrder> carts = jdbcTemplate.query(sql,
+                BeanPropertyRowMapper.newInstance(InfoCusOrder.class));
+         return new ResponseEntity<>(carts, HttpStatus.OK);
+    }
 }
