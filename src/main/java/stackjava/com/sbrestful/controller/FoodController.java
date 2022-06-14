@@ -73,10 +73,10 @@ public class FoodController {
 	    return new ResponseEntity<>("Deleted!", HttpStatus.OK);
 	  }
           /* ---------------- UPDATE FOOD ------------------------ */
-	  @RequestMapping(value = "/foods", method = RequestMethod.PUT)
-          @Transactional
+          @RequestMapping(value = "/foods", method = RequestMethod.PUT)
 	  public ResponseEntity<String> updateFood(@RequestBody Food food) {
-	    food = foodRepository.save(food);
+            String sql = "update food set alias=?, created_by=?, created_date=?, description=?, image=?, name=?, origin_price=?, promotion_price=?, status=?, updated_by=?,updated_date=?, view_count=?, category_id=? where id=?";
+	    jdbcTemplate.update(sql, food.getAlias(), food.getCreatedBy(), food.getCreatedDate(), food.getDescription(),food.getImage(), food.getName(), food.getOriginPrice(), food.getPromotionPrice(), food.getStatus(), food.getUpdatedBy(), food.getUpdatedDate(), food.getViewCount(), food.getCategory().getID(), food.getId());
 	    return new ResponseEntity<>("updated!", HttpStatus.OK);
 	  }
 	  

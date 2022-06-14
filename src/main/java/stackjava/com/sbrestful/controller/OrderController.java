@@ -65,7 +65,7 @@ public class OrderController {
     }
 //    get cart
 
-    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @RequestMapping(value = "/cart1", method = RequestMethod.GET)
     @Transactional
     public ResponseEntity getcart() {
         String sql = "Select id, customer_name, status from orders where status = 0";
