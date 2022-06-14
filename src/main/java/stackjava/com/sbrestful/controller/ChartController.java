@@ -38,13 +38,24 @@ public class ChartController {
                 BeanPropertyRowMapper.newInstance(Chart.class));
         return new ResponseEntity<>(charts, HttpStatus.OK);
     }
-
+    
     @RequestMapping(value = "/revenue", method = RequestMethod.GET)
     public ResponseEntity getRevenue() {
         String sql = "Select *  \n"
-                + "from(select SUM(total_price) Inmonth \n"
+                + "from(select coalesce(SUM(total_price), 0) Inmonth  \n"
                 + "from orders where month(GETDATE()) - month(CONVERT(INT, CONVERT(DATETIME, created_time,103))) = 0) B, \n"
-                + "(select SUM(total_price) Lastmonth \n"
+                + "(select coalesce(SUM(total_price), 0) Lastmonth \n"
+                + "from orders where month(GETDATE()) - month(CONVERT(INT, CONVERT(DATETIME, created_time,103))) = 1) A";
+        List<Revenue> revenues = jdbcTemplate.query(sql,
+                BeanPropertyRowMapper.newInstance(Revenue.class));
+        return new ResponseEntity<>(revenues, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/customer", method = RequestMethod.GET)
+    public ResponseEntity getCustomer() {
+        String sql = "Select *  \n"
+                + "from(select coalesce(SUM(total_price), 0) Inmonth  \n"
+                + "from orders where month(GETDATE()) - month(CONVERT(INT, CONVERT(DATETIME, created_time,103))) = 0) B, \n"
+                + "(select coalesce(SUM(total_price), 0) Lastmonth \n"
                 + "from orders where month(GETDATE()) - month(CONVERT(INT, CONVERT(DATETIME, created_time,103))) = 1) A";
         List<Revenue> revenues = jdbcTemplate.query(sql,
                 BeanPropertyRowMapper.newInstance(Revenue.class));
